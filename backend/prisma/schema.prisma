@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+ model User {
+  id        String   @id @default(uuid())
+  phone     String   @unique
+  name      String?
+  role     Role @default(CUSTOMER) // USER or ADMIN
+  shop      Shop[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+enum Role {
+  CUSTOMER
+  ADMIN
+OWNER
+}
+model Shop {
+  id          String    @id @default(cuid())
+  ownerId     String
+  owner       User      @relation(fields: [ownerId], references: [id])
+  
+  name        String    // e.g., "Shiwam Automobile"
+  slug        String    @unique // shiwam-automobile
+  city        String    // gaya (lowercase for URL)
+  address     String
+  description String?
+  category    String    // e.g., "Automotive", "Grocery"
+  
+  whatsapp    String    // The target number for orders
+  qrCodeUrl   String?
+  isOpen      Boolean   @default(true)
+  
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  
+  @@index([city, slug]) // Optimizes the search for /[city]/[shop-slug]
+}
+model Product {
+  id          String   @id @default(cuid())
+  shopId      String
+  shop        Shop     @relation(fields: [shopId], references: [id])
+  
+  name        String   // e.g., "Brake Pads"
+  description String?
+  price       Float    // e.g., 29.99
+  imageUrl    String?  // URL to the product image
+  
+  createdAt   DateTime @default(now())
+}
