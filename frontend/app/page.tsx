@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Mic,
   Share2,
@@ -34,7 +35,14 @@ export default function LandingPage() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <div className="flex items-center gap-2">
             <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 shadow-lg shadow-indigo-900/40">
-              <span className="text-white font-black text-lg">A</span>
+              <span className="text-white font-black text-lg">
+                <Image
+        src="/icon.png"     // Path to your image in the /public folder
+        alt="AasPaas Logo"  // Essential for SEO and accessibility
+        width={800}         // Desired width
+        height={600}        // Desired height
+      />
+              </span>
             </div>
             <span className="text-lg font-extrabold tracking-tight text-slate-100">AasPaas</span>
             <span className="ml-2 hidden sm:inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/70 px-2.5 py-1 text-[11px] font-semibold text-slate-300">
