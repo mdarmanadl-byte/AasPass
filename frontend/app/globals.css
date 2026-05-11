@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* If you need to keep your custom styles */
+@layer base {
+  :root {
+    --brand-primary: #6366f1;
+    --bg-main: #020617; /* slate-950 equivalent */
+  }
+
+  body {
+    /* Instead of @apply bg-slate-950, use the theme directly if needed 
+       or ensure @import "tailwindcss" is at the very top. */
+    @apply bg-slate-950 text-slate-100;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@layer components {
+  /* This should now work because @import "tailwindcss" is present */
+  .btn-primary {
+    @apply bg-gradient-to-r from-indigo-500 to-violet-500 text-white px-6 py-3 rounded-2xl font-bold transition-all active:scale-95 shadow-lg shadow-indigo-900/40;
+  }
+
+  .card-glass {
+    @apply rounded-[2.5rem] border border-slate-700 bg-slate-900/70 shadow-2xl backdrop-blur-xl;
+  }
+}
