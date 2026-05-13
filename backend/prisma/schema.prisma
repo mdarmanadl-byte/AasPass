@@ -4,27 +4,31 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js" // FIXED: changed from "prisma-client" to "prisma-client-js"
   output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
- model User {
+
+model User {
   id        String   @id @default(uuid())
   phone     String   @unique
   name      String?
-  role     Role @default(CUSTOMER) // USER or ADMIN
+  role      Role     @default(CUSTOMER)
   shop      Shop[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
 enum Role {
   CUSTOMER
   ADMIN
-OWNER
+  OWNER
 }
+
 model Shop {
   id          String    @id @default(cuid())
   ownerId     String
@@ -46,6 +50,7 @@ model Shop {
   
   @@index([city, slug]) // Optimizes the search for /[city]/[shop-slug]
 }
+
 model Product {
   id          String   @id @default(cuid())
   shopId      String

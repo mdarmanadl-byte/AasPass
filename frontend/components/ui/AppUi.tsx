@@ -11,12 +11,15 @@ export const Button = ({ children, className = "", ...props }: { children: React
 );
 
 // 2. The Transparent "Glass" Card
-export const Card = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
-  <div className={`rounded-[2.5rem] border border-slate-700 bg-slate-900/70 shadow-2xl backdrop-blur-xl ${className}`}>
+export const Card = ({ children, className, ...props }: CardProps) => (
+  <div 
+    // The {...props} spread is crucial—it passes the onClick down to the div
+    {...props} 
+    className={`bg-slate-900/50 border border-slate-800 rounded-[2.5rem] backdrop-blur-md ${className}`}
+  >
     {children}
   </div>
 );
-
 // 3. The Styled Input Field
 export const Input = ({ icon: Icon, label, ...props }: { icon?: React.ComponentType<{ className?: string }>; label?: string; [key: string]: unknown }) => (
   <div className="space-y-2">
@@ -38,3 +41,13 @@ export const AmbientBackground = () => (
     <div className="absolute inset-0 bg-[radial-gradient(1200px_circle_at_50%_-20%,rgba(99,102,241,0.15),transparent_60%)]" />
   </div>
 );
+// In AasPaasUI.tsx
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  icon?: any; // You can use LucideIcon type here if preferred
+}
+
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  className?: string;
+}
